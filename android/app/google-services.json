@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "157136506174",
-    "project_id": "buddies-gram-5b5b1",
-    "storage_bucket": "buddies-gram-5b5b1.appspot.com"
+    "project_number": "276722421084",
+    "project_id": "funnet-7933b",
+    "storage_bucket": "funnet-7933b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:157136506174:android:94a50b15083f751094706f",
+        "mobilesdk_app_id": "1:276722421084:android:dd4fe32b14f9a0d956c599",
         "android_client_info": {
-          "package_name": "com.muhammadali.buddiesgram"
+          "package_name": "com.tobicic.funnet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "157136506174-pvtasvfj24kqtgl0b48aloufq2g0rtei.apps.googleusercontent.com",
+          "client_id": "276722421084-3qm15npdbv9vq8oi0l8b6j37fralcv0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tobicic.funnet",
+            "certificate_hash": "79f5320e71bd0c1327a21bfff2bbe6b9ea8b7bfe"
+          }
+        },
+        {
+          "client_id": "276722421084-801j7g9gv52p607802v8p54sihde0ck5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCuWoLAKcHQXcGbV46osfKZLxTCO_IMKGY"
+          "current_key": "AIzaSyAxKhkH8gAMOd58Ukh0yboo2ThJZrC1ZDU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "157136506174-pvtasvfj24kqtgl0b48aloufq2g0rtei.apps.googleusercontent.com",
+              "client_id": "276722421084-801j7g9gv52p607802v8p54sihde0ck5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
