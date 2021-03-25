@@ -1,1 +1,1 @@
-## BuddiesGram, a Social Network from Coding Cafe
+## funnet, a funny net app
