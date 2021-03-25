@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "157136506174",
+    "project_id": "buddies-gram-5b5b1",
+    "storage_bucket": "buddies-gram-5b5b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157136506174:android:94a50b15083f751094706f",
+        "android_client_info": {
+          "package_name": "com.muhammadali.buddiesgram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157136506174-pvtasvfj24kqtgl0b48aloufq2g0rtei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuWoLAKcHQXcGbV46osfKZLxTCO_IMKGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157136506174-pvtasvfj24kqtgl0b48aloufq2g0rtei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
