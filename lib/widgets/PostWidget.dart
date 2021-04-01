@@ -110,9 +110,21 @@ class _PostState extends State<Post>
   Widget build(BuildContext context)
   {
     isLiked = (likes[currentOnlineUserId] == true);
-
-    return Padding(
-      padding: EdgeInsets.only(bottom: 12.0),
+    // START Schulungscode
+    //return Padding(
+    //  padding: EdgeInsets.only(bottom: 12.0),
+    //  child: Column(
+    //    mainAxisSize: MainAxisSize.min,
+    //    children: <Widget>
+    //    [
+    //      createPostHead(),
+    //      createPostPicture(),
+    //      createPostFooter()
+    //    ],
+    //  ),
+    //);
+    // ENDE Schulungscode
+    return Container( // Beispiel aus https://medium.com/flutterfly-tech/flutter-listview-gridview-ce7177812b1d
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>
@@ -122,6 +134,8 @@ class _PostState extends State<Post>
           createPostFooter()
         ],
       ),
+      width: 200,
+      color: Colors.grey,
     );
   }
 
@@ -300,7 +314,11 @@ class _PostState extends State<Post>
         alignment: Alignment.center,
         children: <Widget>
         [
-          Image.network(url),
+          Image.network(url,
+            height: 180.0,
+            width: 180.0,
+            //fit: BoxFit.scaleDown,
+          ),
           showHeart ? Icon(Icons.favorite, size: 140.0, color: Colors.pink,) : Text(""),
         ],
       ),

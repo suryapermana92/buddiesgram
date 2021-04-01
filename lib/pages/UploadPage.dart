@@ -62,18 +62,18 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
       context: mContext,
       builder: (context){
         return SimpleDialog(
-          title: Text("New Post", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          title: Text("Neue News", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           children: <Widget>[
             SimpleDialogOption(
-              child: Text("Capture Image with Camera", style: TextStyle(color: Colors.white,),),
+              child: Text("Nehme ein Bild auf", style: TextStyle(color: Colors.white,),),
               onPressed: captureImageWithCamera,
             ),
             SimpleDialogOption(
-              child: Text("Select Image from Gallery", style: TextStyle(color: Colors.white,),),
+              child: Text("Wähle ein Bild aus Deiner Galerie", style: TextStyle(color: Colors.white,),),
               onPressed: pickImageFromGallery,
             ),
             SimpleDialogOption(
-              child: Text("Cancel", style: TextStyle(color: Colors.white,),),
+              child: Text("Abbrechen", style: TextStyle(color: Colors.white,),),
               onPressed: () => Navigator.pop(context),
             ),
           ],
@@ -88,15 +88,20 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(Icons.add_photo_alternate, color: Colors.grey, size: 200.0,),
+          Icon(Icons.add_photo_alternate, color: Colors.white, size: 100.0,),
           Padding(
             padding: EdgeInsets.only(top: 20.0),
             child: RaisedButton(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0),),
-              child: Text("Upload Image", style: TextStyle(color: Colors.white, fontSize: 20.0),),
-              color: Colors.green,
+              child: Text("Bild hochladen", style: TextStyle(color: Colors.white, fontSize: 20.0),),
+              color: Colors.green.shade500,
               onPressed: () => takeImage(context)
             ),
+            //child: FloatingActionButton.extended(
+            //  //icon: const Icon(Icons.add_circle_rounded),
+            //  label: Text("Bild hochladen", style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),),
+            //  onPressed: () {},
+            //),
           ),
          ],
       ),

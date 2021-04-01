@@ -6,6 +6,7 @@ import 'package:buddiesgram/pages/NotificationsPage.dart';
 import 'package:buddiesgram/pages/ProfilePage.dart';
 import 'package:buddiesgram/pages/SearchPage.dart';
 import 'package:buddiesgram/pages/TimeLinePage.dart';
+import 'package:buddiesgram/pages/GameScorePage.dart';
 import 'package:buddiesgram/pages/UploadPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -24,6 +25,7 @@ final commentsRefrence = Firestore.instance.collection("comments");
 final followersRefrence = Firestore.instance.collection("followers");
 final followingRefrence = Firestore.instance.collection("following");
 final timelineRefrence = Firestore.instance.collection("timeline");
+final gamescoreRefrence = Firestore.instance.collection("gamescore");
 
 final DateTime timestamp = DateTime.now();
 User currentUser;
@@ -179,6 +181,7 @@ class _HomePageState extends State<HomePage>
           SearchPage(),
           UploadPage(gCurrentUser: currentUser,),
           NotificationsPage(),
+          GameScorePage(),
           ProfilePage(userProfileId: currentUser?.id),
         ],
         controller: pageController,
@@ -192,11 +195,12 @@ class _HomePageState extends State<HomePage>
         activeColor: Colors.white,
         inactiveColor: Colors.blueGrey,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home)),
-          BottomNavigationBarItem(icon: Icon(Icons.search)),
-          BottomNavigationBarItem(icon: Icon(Icons.photo_camera, size: 37.0,)),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite)),
-          BottomNavigationBarItem(icon: Icon(Icons.person)),
+          BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white, size: 28.0,)),
+          BottomNavigationBarItem(icon: Icon(Icons.search, color: Colors.white, size: 28.0,)),
+          BottomNavigationBarItem(icon: Icon(Icons.photo_camera, color: Colors.white, size: 36.0,)),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite, color: Colors.white, size: 28.0,)),
+          BottomNavigationBarItem(icon: Icon(Icons.gamepad, color: Colors.white, size: 28.0,)),
+          BottomNavigationBarItem(icon: Icon(Icons.person, color: Colors.white, size: 28.0,)),
         ],
       ),
     );
@@ -218,14 +222,14 @@ class _HomePageState extends State<HomePage>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              "BuddiesGram",
-              style: TextStyle(fontSize: 92.0, color: Colors.white, fontFamily: "Signatra"),
+              "funnet.online",
+              style: TextStyle(fontSize: 48.0, color: Colors.white, fontFamily: "Fira Sans Condensed"),
             ),
             GestureDetector(
               onTap: loginUser,
               child: Container(
                 width: 270.0,
-                height: 65.0,
+                height: 56.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/images/google_signin_button.png"),

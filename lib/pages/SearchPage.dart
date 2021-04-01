@@ -26,7 +26,7 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
   }
 
   controlSearching(String str){
-    Future<QuerySnapshot> allUsers = usersReference.where("profileName", isGreaterThanOrEqualTo: str).getDocuments();
+    Future<QuerySnapshot> allUsers = usersReference.where("username", isGreaterThanOrEqualTo: str).getDocuments();
     setState(() {
       futureSearchResults = allUsers;
     });
@@ -34,15 +34,15 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
 
   AppBar searchPageHeader(){
     return AppBar(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.green,
       title: TextFormField(
         style: TextStyle(fontSize: 18.0, color: Colors.white),
         controller: searchTextEditingController,
         decoration: InputDecoration(
-          hintText: "Search here....",
-          hintStyle: TextStyle(color: Colors.grey),
+          hintText: "Suche ....",
+          hintStyle: TextStyle(color: Colors.white),
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: BorderSide(color: Colors.white),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
@@ -64,11 +64,11 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            Icon(Icons.group, color: Colors.grey, size: 200.0,),
+            Icon(Icons.group, color: Colors.white, size: 100.0,),
             Text(
-              "Search Users",
+              "Mitspieler suchen",
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 50.0),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 32.0),
             ),
           ],
         ),
@@ -104,7 +104,7 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.green.shade400,
       appBar: searchPageHeader(),
       body: futureSearchResults == null ? displayNoSearchResultScreen() : displayUsersFoundScreen(),
     );

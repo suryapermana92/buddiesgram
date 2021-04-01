@@ -161,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage>
           margin: EdgeInsets.only(top: 5.0),
           child: Text(
             title,
-            style: TextStyle(fontSize: 16.0, color: Colors.grey, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.w400),
           ),
         ),
       ],
@@ -173,15 +173,15 @@ class _ProfilePageState extends State<ProfilePage>
     bool ownProfile = currentOnlineUserId == widget.userProfileId;
     if(ownProfile)
     {
-      return createButtonTitleAndFunction(title: "Edit Profile", performFunction: editUserProfile,);
+      return createButtonTitleAndFunction(title: "Profil bearbeiten", performFunction: editUserProfile,);
     }
     else if(following)
     {
-      return createButtonTitleAndFunction(title: "Unfollow", performFunction: controlUnfollowUser,);
+      return createButtonTitleAndFunction(title: "Nicht mehr folgen", performFunction: controlUnfollowUser,);
     }
     else if(!following)
     {
-      return createButtonTitleAndFunction(title: "Follow", performFunction: controlFollowUser,);
+      return createButtonTitleAndFunction(title: "Folgen", performFunction: controlFollowUser,);
     }
   }
 
@@ -255,8 +255,8 @@ class _ProfilePageState extends State<ProfilePage>
         onPressed: performFunction,
         child: Container(
           width: 245.0,
-          height: 26.0,
-          child: Text(title, style: TextStyle(color: following ? Colors.grey : Colors.white70, fontWeight: FontWeight.bold),),
+          height: 36.0,
+          child: Text(title, style: TextStyle(color: following ? Colors.grey : Colors.green, fontWeight: FontWeight.bold),),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: following ? Colors.black : Colors.white70,
@@ -279,7 +279,7 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, strTitle: "Profile",),
+      appBar: header(context, strTitle: "Dein Funnet Profil",),
       body: ListView(
         children: <Widget>[
           createProfileTopView(),
@@ -307,7 +307,7 @@ class _ProfilePageState extends State<ProfilePage>
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(30.0),
-              child: Icon(Icons.photo_library, color: Colors.grey, size: 200.0,),
+              child: Icon(Icons.photo_library, color: Colors.white, size: 200.0,),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20.0),
@@ -363,12 +363,12 @@ class _ProfilePageState extends State<ProfilePage>
         IconButton(
           onPressed: ()=> setOrientation("grid"),
           icon: Icon(Icons.grid_on),
-          color: postOrientation == "grid" ? Theme.of(context).primaryColor : Colors.grey,
+          color: postOrientation == "grid" ? Theme.of(context).primaryColor : Colors.white,
         ),
         IconButton(
           onPressed: ()=> setOrientation("list"),
           icon: Icon(Icons.list),
-          color: postOrientation == "list" ? Theme.of(context).primaryColor : Colors.grey,
+          color: postOrientation == "list" ? Theme.of(context).primaryColor : Colors.white,
         ),
       ],
     );

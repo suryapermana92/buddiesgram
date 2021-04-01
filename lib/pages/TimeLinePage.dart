@@ -70,7 +70,84 @@ class _TimeLinePageState extends State<TimeLinePage>
     }
     else
     {
-      return ListView(children: posts,);
+      //return ListView(children: posts,);
+      return SingleChildScrollView( // Beispiel aus https://medium.com/flutterfly-tech/flutter-listview-gridview-ce7177812b1d
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 200,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: posts,
+                ),
+              ),
+              Container(
+                height: 200,
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children: <Widget>[
+                    Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.yellowAccent,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.blue,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.green,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.red,
+                    ),Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.yellowAccent,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.blue,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.green,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 100,
+                      color: Colors.red,
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                height: 200,
+                child: GridView.count(
+                  scrollDirection: Axis.horizontal,
+                  crossAxisCount: 2 ,
+                  children: List.generate(50,(index){
+                    return Container(
+                      child: Card(
+                        color: Colors.amber,
+                      ),
+                    );
+                  }),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
     }
   }
 
@@ -79,7 +156,8 @@ class _TimeLinePageState extends State<TimeLinePage>
     return Scaffold(
       key: _scaffoldKey,
 
-      appBar: header(context, isAppTitle: true,),
+      //appBar: header(context, isAppTitle: true,),
+      appBar: header(context, strTitle: "Deine TimeLine",),
 
       body: RefreshIndicator(child: createUserTimeLine(), onRefresh: () => retrieveTimeLine()),
     );

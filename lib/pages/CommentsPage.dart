@@ -91,7 +91,7 @@ class CommentsPageState extends State<CommentsPage>
             title: TextFormField(
               controller: commentTextEditingController,
               decoration: InputDecoration(
-                labelText: "Write comment here...",
+                labelText: "Schreibe hier Deinen Kommentar...",
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
@@ -101,7 +101,7 @@ class CommentsPageState extends State<CommentsPage>
             trailing: OutlineButton(
               onPressed: saveComment,
               borderSide: BorderSide.none,
-              child: Text("Publish", style: TextStyle(color: Colors.lightGreenAccent, fontWeight: FontWeight.bold),),
+              child: Text("Veröffentlichen", style: TextStyle(color: Colors.lightGreenAccent, fontWeight: FontWeight.bold),),
             ),
           ),
         ],

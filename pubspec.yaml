@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   cloud_firestore: ^0.9.7+2
+  scoped_model: ^1.0.1 # GameScoreCounter
   image: ^2.0.7
   animator: 0.1.4
   image_picker: ^0.6.0+2
@@ -34,6 +35,7 @@ dependencies:
   firebase_messaging: ^4.0.0+1
   firebase_storage: ^2.1.0+1
   flutter_svg:
+  google_maps_flutter: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -49,5 +51,9 @@ flutter:
     - family: Signatra
       fonts:
         - asset: assets/fonts/Signatra.ttf
+
+    - family: Fira Sans Condensed
+      fonts:
+        - asset: assets/fonts/FiraSansCondensed-Regular.ttf
   assets:
     - assets/images/google_signin_button.png

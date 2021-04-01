@@ -8,11 +8,11 @@ AppBar header(context, {bool isAppTitle=false, String strTitle, disappearedBackB
     ),
     automaticallyImplyLeading: disappearedBackButton ? false : true,
     title: Text(
-      isAppTitle ? "BuddiesGram" : strTitle,
+      isAppTitle ? "Dein Funnet" : strTitle,
       style: TextStyle(
         color: Colors.white,
-        fontFamily: isAppTitle ? "Signatra" : "",
-        fontSize: isAppTitle ? 45.0 : 22.0,
+        fontFamily: isAppTitle ? "Fira Sans Condensed" : "",
+        fontSize: isAppTitle ? 32.0 : 22.0,
       ),
       overflow: TextOverflow.ellipsis,
     ),

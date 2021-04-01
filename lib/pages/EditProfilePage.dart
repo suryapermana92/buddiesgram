@@ -80,7 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     return Scaffold(
       key: _scaffoldGlobalKey,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.green,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text("Edit Profile", style: TextStyle(color: Colors.white),),
         actions: <Widget>[
@@ -108,7 +108,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                   child: RaisedButton(
                     onPressed: updateUserData,
                     child: Text(
-                      "          Update          ",
+                      "          Aktualisieren          ",
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                     ),
                   ),
@@ -119,7 +119,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                     color: Colors.red,
                     onPressed: logoutUser,
                     child: Text(
-                      "Logout",
+                      "                   Logout                   ",
                       style: TextStyle(color: Colors.white, fontSize: 14.0),
                     ),
                   ),
@@ -144,22 +144,22 @@ class _EditProfilePageState extends State<EditProfilePage>
         Padding(
           padding: EdgeInsets.only(top: 13.0),
           child: Text(
-            "Profile Name", style: TextStyle(color: Colors.grey),
+            "Spielername", style: TextStyle(color: Colors.white),
           ),
         ),
         TextField(
           style: TextStyle(color: Colors.white),
           controller: profileNameTextEditingController,
           decoration: InputDecoration(
-            hintText: "Write profile name here...",
+            hintText: "Schreibe hier Deinen Spielername ...",
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.white),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
-            hintStyle: TextStyle(color: Colors.grey),
-            errorText: _profileNameValid ? null : "Profile name is very short",
+            hintStyle: TextStyle(color: Colors.white),
+            errorText: _profileNameValid ? null : "Spielername ist sehr kurz",
           ),
         ),
       ],
@@ -173,22 +173,22 @@ class _EditProfilePageState extends State<EditProfilePage>
         Padding(
           padding: EdgeInsets.only(top: 13.0),
           child: Text(
-            "Bio", style: TextStyle(color: Colors.grey),
+            "Bio", style: TextStyle(color: Colors.white),
           ),
         ),
         TextField(
           style: TextStyle(color: Colors.white),
           controller: bioTextEditingController,
           decoration: InputDecoration(
-            hintText: "Write Bio here...",
+            hintText: "Schreibe hier Deine Bio ...",
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.white),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
-            hintStyle: TextStyle(color: Colors.grey),
-            errorText: _bioValid ? null : "Bio is very Long.",
+            hintStyle: TextStyle(color: Colors.white),
+            errorText: _bioValid ? null : "Bio ist sehr lang.",
           ),
         ),
       ],

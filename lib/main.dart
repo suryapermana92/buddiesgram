@@ -14,14 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BuddiesGram',
+      title: 'funnet.online',
       debugShowCheckedModeBanner: false,
       theme: ThemeData
       (
-        scaffoldBackgroundColor: Colors.black,
-        dialogBackgroundColor: Colors.black,
-        primarySwatch: Colors.grey,
-        accentColor: Colors.black,
+        scaffoldBackgroundColor: Colors.green.shade400,
+        dialogBackgroundColor: Colors.greenAccent,
+        primarySwatch: Colors.green,
+        accentColor: Colors.green,
         cardColor: Colors.white70,
       ),
       home: HomePage(),

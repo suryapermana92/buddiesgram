@@ -25,7 +25,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) 
   {
     return Scaffold(
-      appBar: header(context, strTitle: "Notifications",),
+      appBar: header(context, strTitle: "Deine Notifications",),
       body: Container(
         child: FutureBuilder(
           future: retrieveNotifications(),
