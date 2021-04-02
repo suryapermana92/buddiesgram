@@ -11,64 +11,75 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-
-
-
-
-
-class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMixin<SearchPage>
-{
+class _SearchPageState extends State<SearchPage>
+    with AutomaticKeepAliveClientMixin<SearchPage> {
   TextEditingController searchTextEditingController = TextEditingController();
   Future<QuerySnapshot> futureSearchResults;
 
-  emptyTheTextFormField(){
+  emptyTheTextFormField() {
     searchTextEditingController.clear();
   }
 
-  controlSearching(String str){
-    Future<QuerySnapshot> allUsers = usersReference.where("username", isGreaterThanOrEqualTo: str).getDocuments();
+  controlSearching(String str) {
+    Future<QuerySnapshot> allUsers =
+        usersReference.where("username", isGreaterThanOrEqualTo: str).get();
     setState(() {
       futureSearchResults = allUsers;
     });
   }
 
-  AppBar searchPageHeader(){
+  AppBar searchPageHeader() {
     return AppBar(
       backgroundColor: Colors.green,
       title: TextFormField(
         style: TextStyle(fontSize: 18.0, color: Colors.white),
         controller: searchTextEditingController,
         decoration: InputDecoration(
-          hintText: "Suche ....",
-          hintStyle: TextStyle(color: Colors.white),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
-          filled: true,
-          prefixIcon: Icon(Icons.person_pin, color: Colors.white, size: 30.0,),
-          suffixIcon: IconButton(icon: Icon(Icons.clear, color: Colors.white,), onPressed: emptyTheTextFormField,)
-        ),
+            hintText: "Suche ....",
+            hintStyle: TextStyle(color: Colors.white),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
+            filled: true,
+            prefixIcon: Icon(
+              Icons.person_pin,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            suffixIcon: IconButton(
+              icon: Icon(
+                Icons.clear,
+                color: Colors.white,
+              ),
+              onPressed: emptyTheTextFormField,
+            )),
         onFieldSubmitted: controlSearching,
       ),
     );
   }
 
-
-  Container displayNoSearchResultScreen(){
+  Container displayNoSearchResultScreen() {
     final Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
       child: Center(
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            Icon(Icons.group, color: Colors.white, size: 100.0,),
+            Icon(
+              Icons.group,
+              color: Colors.white,
+              size: 100.0,
+            ),
             Text(
               "Mitspieler suchen",
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 32.0),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 32.0),
             ),
           ],
         ),
@@ -76,19 +87,16 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
     );
   }
 
-  displayUsersFoundScreen(){
+  displayUsersFoundScreen() {
     return FutureBuilder(
       future: futureSearchResults,
-      builder: (context, dataSnapshot)
-      {
-        if(!dataSnapshot.hasData)
-        {
+      builder: (context, dataSnapshot) {
+        if (!dataSnapshot.hasData) {
           return circularProgress();
         }
 
         List<UserResult> searchUsersResult = [];
-        dataSnapshot.data.documents.forEach((document)
-        {
+        dataSnapshot.data.doc.forEach((document) {
           User eachUser = User.fromDocument(document);
           UserResult userResult = UserResult(eachUser);
           searchUsersResult.add(userResult);
@@ -106,20 +114,16 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
     return Scaffold(
       backgroundColor: Colors.green.shade400,
       appBar: searchPageHeader(),
-      body: futureSearchResults == null ? displayNoSearchResultScreen() : displayUsersFoundScreen(),
+      body: futureSearchResults == null
+          ? displayNoSearchResultScreen()
+          : displayUsersFoundScreen(),
     );
   }
 }
 
-
-
-
-
-class UserResult extends StatelessWidget
-{
+class UserResult extends StatelessWidget {
   final User eachUser;
   UserResult(this.eachUser);
-
 
   @override
   Widget build(BuildContext context) {
@@ -130,15 +134,28 @@ class UserResult extends StatelessWidget
         child: Column(
           children: <Widget>[
             GestureDetector(
-              onTap: ()=> displayUserProfile(context, userProfileId: eachUser.id),
+              onTap: () =>
+                  displayUserProfile(context, userProfileId: eachUser.id),
               child: ListTile(
-                leading: CircleAvatar(backgroundColor: Colors.black, backgroundImage: CachedNetworkImageProvider(eachUser.url),),  
-                title: Text(eachUser.profileName, style: TextStyle(
-                  color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold,
-                ),),
-                subtitle: Text(eachUser.username, style: TextStyle(
-                  color: Colors.black, fontSize: 13.0,
-                ),),
+                leading: CircleAvatar(
+                  backgroundColor: Colors.black,
+                  backgroundImage: CachedNetworkImageProvider(eachUser.url),
+                ),
+                title: Text(
+                  eachUser.profileName,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  eachUser.username,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 13.0,
+                  ),
+                ),
               ),
             ),
           ],
@@ -147,9 +164,10 @@ class UserResult extends StatelessWidget
     );
   }
 
-
-  displayUserProfile(BuildContext context, {String userProfileId})
-  {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userProfileId: userProfileId)));
+  displayUserProfile(BuildContext context, {String userProfileId}) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProfilePage(userProfileId: userProfileId)));
   }
 }

@@ -9,9 +9,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-
-
-
 class ProfilePage extends StatefulWidget {
   final String userProfileId;
 
@@ -21,11 +18,7 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-
-
-
-class _ProfilePageState extends State<ProfilePage>
-{
+class _ProfilePageState extends State<ProfilePage> {
   final String currentOnlineUserId = currentUser?.id;
   bool loading = false;
   int countPost = 0;
@@ -35,53 +28,52 @@ class _ProfilePageState extends State<ProfilePage>
   int countTotalFollowings = 0;
   bool following = false;
 
-
-  void initState(){
+  void initState() {
     getAllProfilePosts();
     getAllFollowers();
     getAllFollowings();
     checkIfAlreadyFollowing();
   }
 
-
-  getAllFollowings() async
-  {
-    QuerySnapshot querySnapshot = await followingRefrence.document(widget.userProfileId)
-        .collection("userFollowing").getDocuments();
+  getAllFollowings() async {
+    QuerySnapshot querySnapshot = await followingRefrence
+        .doc(widget.userProfileId)
+        .collection("userFollowing")
+        .get();
 
     setState(() {
-      countTotalFollowings = querySnapshot.documents.length;
+      countTotalFollowings = querySnapshot.docs.length;
     });
   }
 
-  checkIfAlreadyFollowing() async
-  {
+  checkIfAlreadyFollowing() async {
     DocumentSnapshot documentSnapshot = await followersRefrence
-        .document(widget.userProfileId).collection("userFollowers")
-        .document(currentOnlineUserId).get();
+        .doc(widget.userProfileId)
+        .collection("userFollowers")
+        .doc(currentOnlineUserId)
+        .get();
 
     setState(() {
       following = documentSnapshot.exists;
     });
   }
 
-  getAllFollowers() async
-  {
-    QuerySnapshot querySnapshot = await followersRefrence.document(widget.userProfileId)
-        .collection("userFollowers").getDocuments();
+  getAllFollowers() async {
+    QuerySnapshot querySnapshot = await followersRefrence
+        .doc(widget.userProfileId)
+        .collection("userFollowers")
+        .get();
 
     setState(() {
-      countTotalFollowers = querySnapshot.documents.length;
+      countTotalFollowers = querySnapshot.docs.length;
     });
   }
 
-
-  createProfileTopView(){
+  createProfileTopView() {
     return FutureBuilder(
-      future: usersReference.document(widget.userProfileId).get(),
-      builder: (context, dataSnapshot){
-        if(!dataSnapshot.hasData)
-        {
+      future: usersReference.doc(widget.userProfileId).get(),
+      builder: (context, dataSnapshot) {
+        if (!dataSnapshot.hasData) {
           return circularProgress();
         }
         User user = User.fromDocument(dataSnapshot.data);
@@ -124,21 +116,24 @@ class _ProfilePageState extends State<ProfilePage>
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(top: 13.0),
                 child: Text(
-                  user.username, style: TextStyle(fontSize: 14.0, color: Colors.white),
+                  user.username,
+                  style: TextStyle(fontSize: 14.0, color: Colors.white),
                 ),
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(top: 5.0),
                 child: Text(
-                  user.profileName, style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  user.profileName,
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
                 ),
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(top: 3.0),
                 child: Text(
-                  user.bio, style: TextStyle(fontSize: 18.0, color: Colors.white70),
+                  user.bio,
+                  style: TextStyle(fontSize: 18.0, color: Colors.white70),
                 ),
               ),
             ],
@@ -148,97 +143,111 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  Column createColumns(String title, int count){
+  Column createColumns(String title, int count) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
           count.toString(),
-          style: TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Container(
           margin: EdgeInsets.only(top: 5.0),
           child: Text(
             title,
-            style: TextStyle(fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w400),
           ),
         ),
       ],
     );
   }
 
-  createButton()
-  {
+  createButton() {
     bool ownProfile = currentOnlineUserId == widget.userProfileId;
-    if(ownProfile)
-    {
-      return createButtonTitleAndFunction(title: "Profil bearbeiten", performFunction: editUserProfile,);
-    }
-    else if(following)
-    {
-      return createButtonTitleAndFunction(title: "Nicht mehr folgen", performFunction: controlUnfollowUser,);
-    }
-    else if(!following)
-    {
-      return createButtonTitleAndFunction(title: "Folgen", performFunction: controlFollowUser,);
+    if (ownProfile) {
+      return createButtonTitleAndFunction(
+        title: "Profil bearbeiten",
+        performFunction: editUserProfile,
+      );
+    } else if (following) {
+      return createButtonTitleAndFunction(
+        title: "Nicht mehr folgen",
+        performFunction: controlUnfollowUser,
+      );
+    } else if (!following) {
+      return createButtonTitleAndFunction(
+        title: "Folgen",
+        performFunction: controlFollowUser,
+      );
     }
   }
 
-  controlUnfollowUser()
-  {
+  controlUnfollowUser() {
     setState(() {
       following = false;
     });
 
-    followersRefrence.document(widget.userProfileId)
+    followersRefrence
+        .doc(widget.userProfileId)
         .collection("userFollowers")
-        .document(currentOnlineUserId)
+        .doc(currentOnlineUserId)
         .get()
-        .then((document){
-          if(document.exists)
-          {
-            document.reference.delete();
-          }
-    });
-
-    followingRefrence.document(currentOnlineUserId)
-        .collection("userFollowing")
-        .document(widget.userProfileId)
-        .get()
-        .then((document){
-      if(document.exists)
-      {
+        .then((document) {
+      if (document.exists) {
         document.reference.delete();
       }
     });
 
-    activityFeedReference.document(widget.userProfileId).collection("feedItems")
-        .document(currentOnlineUserId).get().then((document){
-          if(document.exists)
-          {
-            document.reference.delete();
-          }
+    followingRefrence
+        .doc(currentOnlineUserId)
+        .collection("userFollowing")
+        .doc(widget.userProfileId)
+        .get()
+        .then((document) {
+      if (document.exists) {
+        document.reference.delete();
+      }
+    });
+
+    activityFeedReference
+        .doc(widget.userProfileId)
+        .collection("feedItems")
+        .doc(currentOnlineUserId)
+        .get()
+        .then((document) {
+      if (document.exists) {
+        document.reference.delete();
+      }
     });
   }
 
-  controlFollowUser()
-  {
+  controlFollowUser() {
     setState(() {
       following = true;
     });
 
-    followersRefrence.document(widget.userProfileId).collection("userFollowers")
-        .document(currentOnlineUserId)
-        .setData({});
+    followersRefrence
+        .doc(widget.userProfileId)
+        .collection("userFollowers")
+        .doc(currentOnlineUserId)
+        .set({});
 
-    followingRefrence.document(currentOnlineUserId).collection("userFollowing")
-        .document(widget.userProfileId)
-        .setData({});
+    followingRefrence
+        .doc(currentOnlineUserId)
+        .collection("userFollowing")
+        .doc(widget.userProfileId)
+        .set({});
 
-    activityFeedReference.document(widget.userProfileId)
-        .collection("feedItems").document(currentOnlineUserId)
-        .setData({
+    activityFeedReference
+        .doc(widget.userProfileId)
+        .collection("feedItems")
+        .doc(currentOnlineUserId)
+        .set({
       "type": "follow",
       "ownerId": widget.userProfileId,
       "username": currentUser.username,
@@ -248,7 +257,8 @@ class _ProfilePageState extends State<ProfilePage>
     });
   }
 
-  Container createButtonTitleAndFunction({String title, Function performFunction}){
+  Container createButtonTitleAndFunction(
+      {String title, Function performFunction}) {
     return Container(
       padding: EdgeInsets.only(top: 3.0),
       child: FlatButton(
@@ -256,11 +266,16 @@ class _ProfilePageState extends State<ProfilePage>
         child: Container(
           width: 245.0,
           height: 36.0,
-          child: Text(title, style: TextStyle(color: following ? Colors.grey : Colors.green, fontWeight: FontWeight.bold),),
+          child: Text(
+            title,
+            style: TextStyle(
+                color: following ? Colors.grey : Colors.green,
+                fontWeight: FontWeight.bold),
+          ),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: following ? Colors.black : Colors.white70,
-              border: Border.all(color: following ? Colors.grey : Colors.grey),
+            color: following ? Colors.black : Colors.white70,
+            border: Border.all(color: following ? Colors.grey : Colors.grey),
             borderRadius: BorderRadius.circular(6.0),
           ),
         ),
@@ -268,59 +283,67 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  editUserProfile(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage(currentOnlineUserId: currentOnlineUserId)));
+  editUserProfile() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                EditProfilePage(currentOnlineUserId: currentOnlineUserId)));
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, strTitle: "Dein Funnet Profil",),
+      appBar: header(
+        context,
+        strTitle: "Dein Funnet Profil",
+      ),
       body: ListView(
         children: <Widget>[
           createProfileTopView(),
           Divider(),
           createListAndGridPostOrientation(),
-          Divider(height: 0.0,),
+          Divider(
+            height: 0.0,
+          ),
           displayProfilePost(),
         ],
       ),
     );
   }
 
-
-  displayProfilePost()
-  {
-    if(loading)
-    {
+  displayProfilePost() {
+    if (loading) {
       return circularProgress();
-    }
-    else if(postsList.isEmpty)
-    {
+    } else if (postsList.isEmpty) {
       return Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(30.0),
-              child: Icon(Icons.photo_library, color: Colors.white, size: 200.0,),
+              child: Icon(
+                Icons.photo_library,
+                color: Colors.white,
+                size: 200.0,
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20.0),
-              child: Text("No Posts", style: TextStyle(color: Colors.redAccent, fontSize: 40.0, fontWeight: FontWeight.bold),),
+              child: Text(
+                "No Posts",
+                style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
       );
-    }
-    else if(postOrientation == "grid")
-    {
+    } else if (postOrientation == "grid") {
       List<GridTile> gridTilesList = [];
-      postsList.forEach((eachPost){
+      postsList.forEach((eachPost) {
         gridTilesList.add(GridTile(child: PostTile(eachPost)));
       });
       return GridView.count(
@@ -332,9 +355,7 @@ class _ProfilePageState extends State<ProfilePage>
         physics: NeverScrollableScrollPhysics(),
         children: gridTilesList,
       );
-    }
-    else if(postOrientation == "list")
-    {
+    } else if (postOrientation == "list") {
       return Column(
         children: postsList,
       );
@@ -346,37 +367,44 @@ class _ProfilePageState extends State<ProfilePage>
       loading = true;
     });
 
-    QuerySnapshot querySnapshot = await postsReference.document(widget.userProfileId).collection("usersPosts").orderBy("timestamp", descending: true).getDocuments();
+    QuerySnapshot querySnapshot = await postsReference
+        .doc(widget.userProfileId)
+        .collection("usersPosts")
+        .orderBy("timestamp", descending: true)
+        .get();
 
     setState(() {
       loading = false;
-      countPost = querySnapshot.documents.length;
-      postsList = querySnapshot.documents.map((documentSnapshot) => Post.fromDocument(documentSnapshot)).toList();
+      countPost = querySnapshot.docs.length;
+      postsList = querySnapshot.docs
+          .map((documentSnapshot) => Post.fromDocument(documentSnapshot))
+          .toList();
     });
   }
 
-
-  createListAndGridPostOrientation(){
+  createListAndGridPostOrientation() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         IconButton(
-          onPressed: ()=> setOrientation("grid"),
+          onPressed: () => setOrientation("grid"),
           icon: Icon(Icons.grid_on),
-          color: postOrientation == "grid" ? Theme.of(context).primaryColor : Colors.white,
+          color: postOrientation == "grid"
+              ? Theme.of(context).primaryColor
+              : Colors.white,
         ),
         IconButton(
-          onPressed: ()=> setOrientation("list"),
+          onPressed: () => setOrientation("list"),
           icon: Icon(Icons.list),
-          color: postOrientation == "list" ? Theme.of(context).primaryColor : Colors.white,
+          color: postOrientation == "list"
+              ? Theme.of(context).primaryColor
+              : Colors.white,
         ),
       ],
     );
   }
 
-
-  setOrientation(String orientation)
-  {
+  setOrientation(String orientation) {
     setState(() {
       this.postOrientation = orientation;
     });

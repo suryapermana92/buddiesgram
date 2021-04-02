@@ -6,8 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as tAgo;
 
-class CommentsPage extends StatefulWidget
-{
+class CommentsPage extends StatefulWidget {
   final String postId;
   final String postOwnerId;
   final String postImageUrl;
@@ -15,15 +14,11 @@ class CommentsPage extends StatefulWidget
   CommentsPage({this.postId, this.postOwnerId, this.postImageUrl});
 
   @override
-  CommentsPageState createState() => CommentsPageState(postId: postId, postOwnerId: postOwnerId, postImageUrl: postImageUrl);
+  CommentsPageState createState() => CommentsPageState(
+      postId: postId, postOwnerId: postOwnerId, postImageUrl: postImageUrl);
 }
 
-
-
-
-
-class CommentsPageState extends State<CommentsPage>
-{
+class CommentsPageState extends State<CommentsPage> {
   final String postId;
   final String postOwnerId;
   final String postImageUrl;
@@ -31,17 +26,19 @@ class CommentsPageState extends State<CommentsPage>
 
   CommentsPageState({this.postId, this.postOwnerId, this.postImageUrl});
 
-  retrieveComments()
-  {
+  retrieveComments() {
     return StreamBuilder(
-      stream: commentsRefrence.document(postId).collection("comments").orderBy("timestamp", descending: false).snapshots(),
-      builder: (context, dataSnapshot){
-        if(!dataSnapshot.hasData)
-        {
+      stream: commentsRefrence
+          .doc(postId)
+          .collection("comments")
+          .orderBy("timestamp", descending: false)
+          .snapshots(),
+      builder: (context, dataSnapshot) {
+        if (!dataSnapshot.hasData) {
           return circularProgress();
         }
         List<Comment> comments = [];
-        dataSnapshot.data.documents.forEach((document){
+        dataSnapshot.data.doc.forEach((document) {
           comments.add(Comment.fromDocument(document));
         });
         return ListView(
@@ -51,9 +48,8 @@ class CommentsPageState extends State<CommentsPage>
     );
   }
 
-  saveComment()
-  {
-    commentsRefrence.document(postId).collection("comments").add({
+  saveComment() {
+    commentsRefrence.doc(postId).collection("comments").add({
       "username": currentUser.username,
       "comment": commentTextEditingController.text,
       "timestamp": DateTime.now(),
@@ -61,10 +57,9 @@ class CommentsPageState extends State<CommentsPage>
       "userId": currentUser.id,
     });
 
-    bool isNotPostOwner =  postOwnerId != currentUser.id;
-    if(isNotPostOwner)
-    {
-      activityFeedReference.document(postOwnerId).collection("feedItems").add({
+    bool isNotPostOwner = postOwnerId != currentUser.id;
+    if (isNotPostOwner) {
+      activityFeedReference.doc(postOwnerId).collection("feedItems").add({
         "type": "comment",
         "commentData": commentTextEditingController.text,
         "postId": postId,
@@ -79,8 +74,7 @@ class CommentsPageState extends State<CommentsPage>
   }
 
   @override
-  Widget build(BuildContext context) 
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context, strTitle: "Comments"),
       body: Column(
@@ -93,15 +87,22 @@ class CommentsPageState extends State<CommentsPage>
               decoration: InputDecoration(
                 labelText: "Schreibe hier Deinen Kommentar...",
                 labelStyle: TextStyle(color: Colors.white),
-                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white)),
               ),
               style: TextStyle(color: Colors.white),
             ),
             trailing: OutlineButton(
               onPressed: saveComment,
               borderSide: BorderSide.none,
-              child: Text("Veröffentlichen", style: TextStyle(color: Colors.lightGreenAccent, fontWeight: FontWeight.bold),),
+              child: Text(
+                "Veröffentlichen",
+                style: TextStyle(
+                    color: Colors.lightGreenAccent,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
@@ -110,12 +111,7 @@ class CommentsPageState extends State<CommentsPage>
   }
 }
 
-
-
-
-
-class Comment extends StatelessWidget
-{
+class Comment extends StatelessWidget {
   final String username;
   final String userId;
   final String url;
@@ -124,8 +120,7 @@ class Comment extends StatelessWidget
 
   Comment({this.username, this.userId, this.url, this.comment, this.timestamp});
 
-  factory Comment.fromDocument(DocumentSnapshot documentSnapshot)
-  {
+  factory Comment.fromDocument(DocumentSnapshot documentSnapshot) {
     return Comment(
       username: documentSnapshot["username"],
       userId: documentSnapshot["userId"],
@@ -144,11 +139,17 @@ class Comment extends StatelessWidget
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Text(username + ":  " + comment, style: TextStyle(fontSize: 18.0, color: Colors.black),),
+              title: Text(
+                username + ":  " + comment,
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              ),
               leading: CircleAvatar(
                 backgroundImage: CachedNetworkImageProvider(url),
               ),
-              subtitle: Text(tAgo.format(timestamp.toDate()), style: TextStyle(color: Colors.black),),
+              subtitle: Text(
+                tAgo.format(timestamp.toDate()),
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         ),

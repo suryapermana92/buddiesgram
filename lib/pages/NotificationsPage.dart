@@ -44,13 +44,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   retrieveNotifications() async
   {
-    QuerySnapshot querySnapshot = await activityFeedReference.document(currentUser.id)
+    QuerySnapshot querySnapshot = await activityFeedReference.doc(currentUser.id)
         .collection("feedItems").orderBy("timestamp", descending: true)
-        .limit(60).getDocuments();
+        .limit(60).get();
 
     List<NotificationsItem> notificationsItems = [];
 
-    querySnapshot.documents.forEach((document){
+    querySnapshot.docs.forEach((document){
       notificationsItems.add(NotificationsItem.fromDocument(document));
     });
 

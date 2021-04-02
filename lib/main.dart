@@ -1,11 +1,15 @@
 import 'package:buddiesgram/pages/HomePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main()
-{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firestore.instance.settings(timestampsInSnapshotsEnabled: true);
+  await Firebase.initializeApp();
+  FirebaseFirestore.instance.settings = const Settings(
+
+//      timestampsInSnapshotsEnabled: true
+      );
 
   runApp(MyApp());
 }
@@ -16,8 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'funnet.online',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData
-      (
+      theme: ThemeData(
         scaffoldBackgroundColor: Colors.green.shade400,
         dialogBackgroundColor: Colors.greenAccent,
         primarySwatch: Colors.green,
